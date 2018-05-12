@@ -12,12 +12,12 @@ class ReactCodeInput extends Component {
   constructor(props) {
     super(props)
 
-    const { value, fields, type, isValid, disabled } = props
+    const { value, fields, isValid, disabled } = props
 
     this.state = {
       value,
       fields,
-      type,
+      type: 'number',
       input: [],
       isValid,
       disabled,
@@ -70,26 +70,24 @@ class ReactCodeInput extends Component {
 
   handleChange(e) {
     const target = Number(e.target.id)
-    let value = String(e.target.value)
+    let inputValue = String(e.target.value)
+    let value;
 
     if (this.state.type === 'number') {
-      value = value.replace(/[^\d]/g, '')
+      inputValue = inputValue.replace(/[^\d]/g, '')
     }
 
-    if (value !== '') {
-      const input = this.state.input.slice()
-      input[target] = value
-      value = input.join('')
+    if (inputValue !== '') {
+      const prevValue = this.state.input[target];
+      inputValue = prevValue ? inputValue.replace(prevValue, '') : inputValue;
 
-      if (value.length > 1) {
-        value.split('').map((s, i) => {
-          if (this.textInput[i]) {
-            this.textInput[i].value = s
-          }
-          return false
-        })
-      }
-      const newTarget = this.textInput[input.length === value.length ? value.length - 1 : value.length]
+      this.textInput[target].value = inputValue
+
+      const input = this.state.input.slice()
+      input[target] = inputValue
+      value = input.join('');
+
+      const newTarget = this.textInput[target + 1];
 
       if (newTarget) {
         newTarget.focus()
@@ -98,11 +96,13 @@ class ReactCodeInput extends Component {
 
       this.setState({ value, input })
     }
+
     if ('onChange' in this.props) {
       if (value) {
         this.props.onChange(value)
       }
     }
+
     this.handleTouch(value)
   }
 
@@ -218,7 +218,7 @@ class ReactCodeInput extends Component {
              type={type}
              min={0}
              max={9}
-             maxLength={input.length === i + 1 ? 1 : input.length}
+             maxLength={input.length}
              style={styles.input}
              autoComplete="off"
              onFocus={(e) => e.target.select(e)}
