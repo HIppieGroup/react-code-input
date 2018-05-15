@@ -75,8 +75,9 @@ class ReactCodeInput extends Component {
     let value;
 
     if (type === 'number' || type === 'tel') {
-      inputValue = inputValue.replace(/[^\d]/g, '')
+      inputValue = inputValue.replace(/\D/gi, '');
     }
+    e.target.value = inputValue;
 
     if (inputValue !== '') {
       const prevValue = this.state.input[target];
