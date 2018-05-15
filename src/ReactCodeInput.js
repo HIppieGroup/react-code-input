@@ -69,11 +69,12 @@ class ReactCodeInput extends Component {
   }
 
   handleChange(e) {
+    const { type } = this.state;
     const target = Number(e.target.id)
     let inputValue = String(e.target.value)
     let value;
 
-    if (this.state.type === 'number') {
+    if (type === 'number' || type === 'tel') {
       inputValue = inputValue.replace(/[^\d]/g, '')
     }
 
