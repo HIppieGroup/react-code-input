@@ -243,7 +243,8 @@ ReactCodeInput.defaultProps = {
   disabled: false,
   fields: 4,
   value: '',
-  type: 'text'
+  type: 'text',
+  placeholder: '1234',
 }
 ReactCodeInput.propTypes = {
   options: PropTypes.object,
