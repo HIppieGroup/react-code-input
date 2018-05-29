@@ -167,7 +167,7 @@ class ReactCodeInput extends Component {
   }
 
   render() {
-    const { className, style = {}, inputStyle = {}, inputStyleInvalid = {}, type } = this.props,
+    const { className, style = {}, inputStyle = {}, inputStyleInvalid = {}, type, placeholder } = this.props,
           { disabled, input, isValid, defaultInputStyle } = this.state,
           styles = {
             container: style,
@@ -220,6 +220,7 @@ class ReactCodeInput extends Component {
              type={type}
              min={0}
              max={9}
+             placeholder={placeholder[i]}
              maxLength={input.length}
              style={styles.input}
              autoComplete="off"
@@ -249,6 +250,7 @@ ReactCodeInput.propTypes = {
   type: PropTypes.oneOf(['text', 'number', 'password', 'tel']),
   fields: PropTypes.number,
   value: PropTypes.string,
+  placeholder: PropTypes.string,
   onChange: PropTypes.func,
   name: PropTypes.string,
   touch: PropTypes.func,
