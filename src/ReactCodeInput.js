@@ -174,6 +174,7 @@ class ReactCodeInput extends Component {
       inputStyleInvalid = {},
       type,
       placeholder,
+      autoFocus,
       onFocus,
     } = this.props,
     { disabled, input, isValid, defaultInputStyle } = this.state,
@@ -231,10 +232,9 @@ class ReactCodeInput extends Component {
              maxLength={input.length}
              style={styles.input}
              autoComplete="off"
+             autoFocus={autoFocus && i === 0}
              onFocus={(e) => {
-                if (i === 0) {
-                  onFocus(e);
-                }
+                onFocus(e);
                 e.target.select(e);
               }}
              onBlur={(e) => this.handleBlur(e)}
@@ -257,11 +257,13 @@ ReactCodeInput.defaultProps = {
   value: '',
   type: 'text',
   placeholder: '1234',
+  autoFocus: false,
 }
 ReactCodeInput.propTypes = {
   options: PropTypes.object,
   type: PropTypes.oneOf(['text', 'number', 'password', 'tel']),
   fields: PropTypes.number,
+  autoFocus: PropTypes.bool,
   value: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
