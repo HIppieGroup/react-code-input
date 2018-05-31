@@ -214,7 +214,6 @@ class ReactCodeInput extends Component {
                this.textInput[i] = ref
              }}
              id={i}
-             autoFocus={(i === 0) ? 'autoFocus' : ''}
              defaultValue={value}
              key={`input_${i}`}
              type={type}
