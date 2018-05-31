@@ -167,12 +167,20 @@ class ReactCodeInput extends Component {
   }
 
   render() {
-    const { className, style = {}, inputStyle = {}, inputStyleInvalid = {}, type, placeholder } = this.props,
-          { disabled, input, isValid, defaultInputStyle } = this.state,
-          styles = {
-            container: style,
-            input: isValid ? inputStyle : inputStyleInvalid
-          }
+    const {
+      className,
+      style = {},
+      inputStyle = {},
+      inputStyleInvalid = {},
+      type,
+      placeholder,
+      onFocus,
+    } = this.props,
+    { disabled, input, isValid, defaultInputStyle } = this.state,
+    styles = {
+      container: style,
+      input: isValid ? inputStyle : inputStyleInvalid
+    }
 
     Object.assign(styles.container, {
         display: 'inline-block'
@@ -223,7 +231,12 @@ class ReactCodeInput extends Component {
              maxLength={input.length}
              style={styles.input}
              autoComplete="off"
-             onFocus={(e) => e.target.select(e)}
+             onFocus={(e) => {
+                if (i === 0) {
+                  onFocus(e);
+                }
+                e.target.select(e);
+              }}
              onBlur={(e) => this.handleBlur(e)}
              onChange={(e) => this.handleChange(e)}
              onKeyDown={(e) => this.onKeyDown(e)}
@@ -252,6 +265,7 @@ ReactCodeInput.propTypes = {
   value: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
+  onFocus: PropTypes.func,
   name: PropTypes.string,
   touch: PropTypes.func,
   untouch: PropTypes.func,
