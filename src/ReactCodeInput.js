@@ -41,7 +41,11 @@ class ReactCodeInput extends Component {
         this.state.input.push(value)
       }
     }
-    this.textInput = []
+    this.textInput = [];
+    document.addEventListener('focusout', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
   }
 
   componentWillReceiveProps(nextProps) {
